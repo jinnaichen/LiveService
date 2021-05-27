@@ -1,0 +1,8 @@
+#ignore directories
+Pods/
+*/xcuserdata/
+
+#ignore files
+*.xcworkspace
+.DS_Store
+.lock
