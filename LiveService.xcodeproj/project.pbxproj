@@ -9,13 +9,16 @@
 /* Begin PBXBuildFile section */
 		8E87507CACE9283910C52DAD /* libPods-LiveService.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BCD608A6FEB8E1752A17BB /* libPods-LiveService.a */; };
 		B7505842265F8FEB005D8017 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7505841265F8FEB005D8017 /* AppDelegate.swift */; };
-		B7505844265F8FEB005D8017 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7505843265F8FEB005D8017 /* SceneDelegate.swift */; };
-		B7505846265F8FEB005D8017 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7505845265F8FEB005D8017 /* ViewController.swift */; };
+		B7505846265F8FEB005D8017 /* LiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7505845265F8FEB005D8017 /* LiveViewController.swift */; };
 		B7505849265F8FEB005D8017 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B7505847265F8FEB005D8017 /* Main.storyboard */; };
 		B750584B265F8FED005D8017 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B750584A265F8FED005D8017 /* Assets.xcassets */; };
 		B750584E265F8FED005D8017 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B750584C265F8FED005D8017 /* LaunchScreen.storyboard */; };
 		B7505859265F8FED005D8017 /* LiveServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7505858265F8FED005D8017 /* LiveServiceTests.swift */; };
 		B7505864265F8FED005D8017 /* LiveServiceUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7505863265F8FED005D8017 /* LiveServiceUITests.swift */; };
+		B7505881265F924F005D8017 /* LiveVideoCaptureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7505880265F924F005D8017 /* LiveVideoCaptureService.swift */; };
+		B7505886265F9E94005D8017 /* LiveServiceError.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7505885265F9E94005D8017 /* LiveServiceError.swift */; };
+		B750588B265FA5AB005D8017 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B750588A265FA5AB005D8017 /* CoreMedia.framework */; };
+		B750588D265FA5B1005D8017 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B750588C265FA5B1005D8017 /* AVFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,8 +43,7 @@
 		B4BCD608A6FEB8E1752A17BB /* libPods-LiveService.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LiveService.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B750583E265F8FEB005D8017 /* LiveService.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LiveService.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7505841265F8FEB005D8017 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B7505843265F8FEB005D8017 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		B7505845265F8FEB005D8017 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B7505845265F8FEB005D8017 /* LiveViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveViewController.swift; sourceTree = "<group>"; };
 		B7505848265F8FEB005D8017 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B750584A265F8FED005D8017 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B750584D265F8FED005D8017 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -52,6 +54,10 @@
 		B750585F265F8FED005D8017 /* LiveServiceUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LiveServiceUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B7505863265F8FED005D8017 /* LiveServiceUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveServiceUITests.swift; sourceTree = "<group>"; };
 		B7505865265F8FED005D8017 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B7505880265F924F005D8017 /* LiveVideoCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveVideoCaptureService.swift; sourceTree = "<group>"; };
+		B7505885265F9E94005D8017 /* LiveServiceError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveServiceError.swift; sourceTree = "<group>"; };
+		B750588A265FA5AB005D8017 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		B750588C265FA5B1005D8017 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BA7650E8A10D8F6B54207438 /* Pods-LiveService.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LiveService.debug.xcconfig"; path = "Target Support Files/Pods-LiveService/Pods-LiveService.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -60,7 +66,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B750588B265FA5AB005D8017 /* CoreMedia.framework in Frameworks */,
 				8E87507CACE9283910C52DAD /* libPods-LiveService.a in Frameworks */,
+				B750588D265FA5B1005D8017 /* AVFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -84,6 +92,8 @@
 		2502D76A494A15B654D2D009 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B750588C265FA5B1005D8017 /* AVFoundation.framework */,
+				B750588A265FA5AB005D8017 /* CoreMedia.framework */,
 				B4BCD608A6FEB8E1752A17BB /* libPods-LiveService.a */,
 			);
 			name = Frameworks;
@@ -95,7 +105,6 @@
 				BA7650E8A10D8F6B54207438 /* Pods-LiveService.debug.xcconfig */,
 				7DAA514114C6B93368787C77 /* Pods-LiveService.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -125,8 +134,9 @@
 			isa = PBXGroup;
 			children = (
 				B7505841265F8FEB005D8017 /* AppDelegate.swift */,
-				B7505843265F8FEB005D8017 /* SceneDelegate.swift */,
-				B7505845265F8FEB005D8017 /* ViewController.swift */,
+				B7505845265F8FEB005D8017 /* LiveViewController.swift */,
+				B7505880265F924F005D8017 /* LiveVideoCaptureService.swift */,
+				B7505885265F9E94005D8017 /* LiveServiceError.swift */,
 				B7505847265F8FEB005D8017 /* Main.storyboard */,
 				B750584A265F8FED005D8017 /* Assets.xcassets */,
 				B750584C265F8FED005D8017 /* LaunchScreen.storyboard */,
@@ -309,9 +319,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B7505846265F8FEB005D8017 /* ViewController.swift in Sources */,
+				B7505886265F9E94005D8017 /* LiveServiceError.swift in Sources */,
+				B7505881265F924F005D8017 /* LiveVideoCaptureService.swift in Sources */,
+				B7505846265F8FEB005D8017 /* LiveViewController.swift in Sources */,
 				B7505842265F8FEB005D8017 /* AppDelegate.swift in Sources */,
-				B7505844265F8FEB005D8017 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -490,6 +501,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LiveService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -509,6 +521,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = LiveService/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
