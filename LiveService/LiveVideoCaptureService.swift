@@ -34,8 +34,8 @@ struct LiveVideoParam {
     }
 }
 
-protocol LiveVideoCaptureServiceDelegate: NSObjectProtocol {
-    func videoCaptureOutput(handleWithData sampleBuffer: CMSampleBuffer) -> Void
+@objc protocol LiveVideoCaptureServiceDelegate: NSObjectProtocol {
+    @objc optional func videoCaptureOutput(handleWithData sampleBuffer: CMSampleBuffer)
 }
 
 class LiveVideoCaptureService: NSObject {
@@ -54,7 +54,7 @@ class LiveVideoCaptureService: NSObject {
         self.init(withVideoParam: param, completionBlock: nil)
     }
     
-    init(withVideoParam videoParam: LiveVideoParam, completionBlock block: ((NSError) -> Void)?) {
+    init(withVideoParam videoParam: LiveVideoParam, completionBlock block: ((NSError?) -> Void)?) {
         isCapture = false
         super.init()
         
@@ -123,9 +123,36 @@ class LiveVideoCaptureService: NSObject {
         previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
         previewLayer?.connection?.videoOrientation = videoParam.videoOrientation
         previewLayer?.videoGravity = .resizeAspectFill
+        adjustFrameRate(videoParam.frameRate)
+        block?(nil)
+    }
+    
+    func startCapture() {
+        if isCapture {
+            return
+        }
+        
+        captureSession?.startRunning()
+        isCapture = true
+    }
+    
+    func stopCapture() {
+        captureSession?.stopRunning()
+        isCapture = false
+    }
+    
+    func adjustFrameRate(_ rate: Int) {
+        try? captureInput?.device.lockForConfiguration()
+        captureInput?.device.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: CMTimeScale(rate))
+        captureInput?.device.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: CMTimeScale(rate))
+        captureInput?.device.unlockForConfiguration()
     }
 }
 
+// MARK:- AVCaptureVideoDataOutputSampleBufferDelegate
+
 extension LiveVideoCaptureService: AVCaptureVideoDataOutputSampleBufferDelegate {
-    
+    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+        delegate?.videoCaptureOutput?(handleWithData: sampleBuffer)
+    }
 }
