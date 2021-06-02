@@ -57,7 +57,10 @@ class LiveVideoCaptureService: NSObject {
     init(withVideoParam videoParam: LiveVideoParam, completionBlock block: ((NSError?) -> Void)?) {
         isCapture = false
         super.init()
-        
+        initSettings(withVideoParam: videoParam, completionBlock: block)
+    }
+    
+    func initSettings(withVideoParam videoParam: LiveVideoParam, completionBlock block: ((NSError?) -> Void)?) {
         var error: NSError?
         self.videoParam = videoParam
         
@@ -141,18 +144,69 @@ class LiveVideoCaptureService: NSObject {
         isCapture = false
     }
     
-    func adjustFrameRate(_ rate: Int) {
+    @discardableResult
+    func adjustFrameRate(_ rate: Int) -> NSError? {
+        guard let frameRateRange = captureInput?.device.activeFormat.videoSupportedFrameRateRanges.first else {
+            return NSError(domain: LiveServiceErrorDomain, code: LiveServiceGetFrameRateRangeError, userInfo: nil)
+        }
+        if rate > Int(frameRateRange.maxFrameRate) || rate < Int(frameRateRange.minFrameRate) {
+            return NSError(domain: LiveServiceErrorDomain, code: LiveServiceSetFrameRateOutRangeError, userInfo: nil)
+        }
         try? captureInput?.device.lockForConfiguration()
         captureInput?.device.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: CMTimeScale(rate))
         captureInput?.device.activeVideoMaxFrameDuration = CMTime(value: 1, timescale: CMTimeScale(rate))
         captureInput?.device.unlockForConfiguration()
+        return nil
+    }
+    
+    @discardableResult
+    func reverseCamera() -> NSError? {
+        let currentPosition = captureInput!.device.position
+        let toPosition: AVCaptureDevice.Position = (currentPosition == .unspecified || currentPosition == .back) ? .front : .back
+        let cameras = AVCaptureDevice.DiscoverySession.init(deviceTypes: [.builtInWideAngleCamera],
+                                                            mediaType: .video,
+                                                            position: toPosition)
+        // 获取摄像头
+        guard let camera = cameras.devices.first else {
+            return NSError(domain: LiveServiceErrorDomain, code: LiveServiceGetCameraError, userInfo: nil)
+        }
+        
+        // 创建deviceInput
+        guard let newInput = try? AVCaptureDeviceInput(device: camera) else {
+            return NSError(domain: LiveServiceErrorDomain, code: LiveServiceCreateDeviceInputError, userInfo: nil)
+        }
+        
+        captureSession?.beginConfiguration()
+        captureSession?.removeInput(captureInput!)
+        guard captureSession!.canAddInput(newInput) else {
+            return NSError(domain: LiveServiceErrorDomain, code: LiveServiceAddDeviceInputError, userInfo: nil)
+        }
+        captureInput = newInput
+        captureSession!.addInput(captureInput!)
+        captureSession?.commitConfiguration()
+        captureConnection = captureVideoOutput?.connection(with: .video)
+        if toPosition == .front && captureConnection!.isVideoMirroringSupported {
+            captureConnection?.isVideoMirrored = true
+        }
+        captureConnection?.videoOrientation = videoParam!.videoOrientation
+        return nil
+    }
+    
+    func changePreset(preset: AVCaptureSession.Preset) {
+        videoParam!.sessionPreset = preset
+        guard captureSession!.canSetSessionPreset(videoParam!.sessionPreset) else {
+            return
+        }
+        captureSession!.canSetSessionPreset(videoParam!.sessionPreset)
     }
 }
 
 // MARK:- AVCaptureVideoDataOutputSampleBufferDelegate
 
 extension LiveVideoCaptureService: AVCaptureVideoDataOutputSampleBufferDelegate {
-    func captureOutput(_ output: AVCaptureOutput, didDrop sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
+    func captureOutput(_ output: AVCaptureOutput,
+                       didDrop sampleBuffer: CMSampleBuffer,
+                       from connection: AVCaptureConnection) {
         delegate?.videoCaptureOutput?(handleWithData: sampleBuffer)
     }
 }
